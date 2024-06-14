@@ -14,8 +14,11 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   phone: string;
+
+  @Column({ unique: true })
+  user_id_number: string;
 
   @Column('bytea', { nullable: true })
   license: Buffer;
@@ -26,7 +29,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: true })
+  @Column({ default: false })
   is_active: boolean;
 
   @Column({ default: false })
