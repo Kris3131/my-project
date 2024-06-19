@@ -1,0 +1,38 @@
+services:
+  wemo-app:
+    container_name: wemo-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=${JWT_SECRET}
+      - DB_TYPE=${DB_TYPE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+
+  db:
+    container_name: wemo-db
+    image: postgis/postgis:14-3.3-alpine
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    command: ['sh', '-c', 'docker-entrypoint.sh postgres && ./init-db.sh']
+
+volumes:
+  postgres-data:
