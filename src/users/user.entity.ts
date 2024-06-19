@@ -1,50 +1,70 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('users')
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  first_name: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  firstName: string;
 
-  @Column()
-  last_name: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  lastName: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', length: 255, unique: true, nullable: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', length: 20, unique: true })
   phone: string;
 
-  @Column({ unique: true })
-  user_id_number: string;
+  @Column({ type: 'varchar', length: 20, unique: true, nullable: true })
+  userIdNumber: string;
 
-  @Column('bytea', { nullable: true })
-  license: Buffer;
-
-  @Column('bytea', { nullable: true })
-  profile_picture: Buffer;
-
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   password: string;
 
-  @Column({ default: false })
-  is_active: boolean;
+  @Column({ type: 'bytea', nullable: true })
+  license: Buffer;
 
-  @Column({ default: false })
-  is_deleted: boolean;
+  @Column({ type: 'bytea', nullable: true })
+  idCard: Buffer;
+
+  @Column({ type: 'bytea', nullable: true })
+  profilePicture: Buffer;
+
+  @Column({ type: 'int', default: 0 })
+  paymentType: number;
+
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  creditCardNumber: string;
+
+  @Column({ type: 'varchar', length: 5, nullable: true })
+  creditCardExpiration: string;
+
+  @Column({ type: 'geography', nullable: true })
+  location: string;
+
+  @Column({ type: 'boolean', default: false })
+  isActive: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isDeleted: boolean;
 
   @Column({ type: 'timestamp', nullable: true })
-  last_login_at: Date;
+  lastLoginAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column({ type: 'int', default: 0 })
+  failedLoginAttempts: number;
 }

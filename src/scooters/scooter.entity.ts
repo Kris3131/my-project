@@ -1,35 +1,43 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('scooters')
+@Entity()
 export class Scooter {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   model: string;
 
-  @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
+  @Column({ type: 'geography' })
   location: string;
 
-  @Column()
+  @Column({ type: 'int', default: 0 }) // 0: INIT; 1: RENTED; 2: MAINTENANCE
   status: number;
 
-  @Column('decimal', { nullable: true })
-  battery_level: number;
+  @Column({ type: 'decimal' })
+  ratePerHour: number;
+
+  @Column({ type: 'decimal' })
+  batteryLevel: number;
 
   @Column({ type: 'timestamp', nullable: true })
-  last_maintenance_date: Date;
+  lastMaintenanceDate: Date;
 
-  @Column({ default: false })
-  is_deleted: boolean;
+  @Column({ type: 'boolean', default: false })
+  isDeleted: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column({ type: 'int', default: 0 })
+  maintenanceStatus: number;
 }
