@@ -164,6 +164,9 @@ This system is an application providing user registration, login, and scooter re
 用戶可以稍後上傳駕照和身份證。
 
 - **Endpoint**: `POST /api/auth/upload-documents`
+
+- Authorization: Bearer jwt-token
+
 - **Request**:
   ```json
   {
@@ -201,6 +204,7 @@ This system is an application providing user registration, login, and scooter re
 使用 Twilio 發送 SMS 驗證碼或使用 SendGrid 發送電子郵件驗證碼。
 
 - **Endpoint**: `POST /api/auth/forgot-password`
+- Authorization: Bearer jwt-token
 - **Request**:
   ```json
   {
@@ -267,6 +271,8 @@ This system is an application providing user registration, login, and scooter re
   - 驗證驗證碼，成功後更新密碼
 
 ### 刪除帳號
+
+- Authorization: Bearer jwt-token
 
 - **Endpoint**: `POST /api/auth/delete-account`
 - **Request**:
@@ -347,6 +353,8 @@ This system is an application providing user registration, login, and scooter re
 
 ### 獲取附近車輛
 
+- Authorization: Bearer jwt-token
+
 - **Endpoint**: `GET /api/scooters/nearby`
 - **Request**:
   ```json
@@ -395,6 +403,8 @@ This system is an application providing user registration, login, and scooter re
 ## Rent API
 
 ### 創建租借記錄
+
+- Authorization: Bearer jwt-token
 
 - **Endpoint**: `POST /api/rents`
 - **Request**:
@@ -449,6 +459,8 @@ This system is an application providing user registration, login, and scooter re
 
 ### 結束租借
 
+- Authorization: Bearer jwt-token
+
 - **Endpoint**: `PUT /api/rents/:rent_id/end`
 - **Request**:
   ```json
@@ -497,7 +509,9 @@ This system is an application providing user registration, login, and scooter re
 
 ## 支付 API
 
-### 創建支付
+### 支付
+
+- Authorization: Bearer jwt-token
 
 - **Endpoint**: `POST /api/payments`
 - **Request**:
@@ -505,7 +519,7 @@ This system is an application providing user registration, login, and scooter re
   {
     "rent_id": 1,
     "payment_method": "credit_card",
-    "amount": 30.0
+    "amount": 30
   }
   ```
 - **Response**:
