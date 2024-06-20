@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wemo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wemo-app
+  template:
+    metadata:
+      labels:
+        app: wemo-app
+    spec:
+      containers:
+        - name: wemo-app
+          image: kris31/wemo-app
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "development"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+            - name: DB_TYPE
+              value: "postgres"
+            - name: DB_HOST
+              value: "wemo-db"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: DB_DATABASE
+              value: "postgres"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
