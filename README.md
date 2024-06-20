@@ -8,6 +8,7 @@
 
 ## 系統說明
 
+[Figma flow](https://www.figma.com/board/LTHTSKeRFwaxkwlOGxB3iV/WM_2024?node-id=0-1&t=nHQILWPnP4pdPMgr-1)
 This system is an application providing user registration, login, and scooter rental services. Users can register via phone number, verify their identity, and upload their driving license and ID card for authentication. After logging in, users can view nearby available scooters, rent them, and make payments. The system also includes rental history, a rating system, an admin backend, and a notification system.
 
 ## 資料庫架構
